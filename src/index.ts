@@ -57,7 +57,7 @@ const properties: {
   isAvailable: boolean;
 }[] = [
   {
-    image: '../images/colombia-property.jpg',
+    image: '/images/colombia-property.jpg',
     title: 'Colombian Shack',
     price: 45,
     location: {
@@ -70,7 +70,7 @@ const properties: {
     isAvailable: true,
   },
   {
-    image: '../images/poland-property.jpg',
+    image: '/images/poland-property.jpg',
     title: 'Polish Cottage',
     price: 34,
     location: {
@@ -83,7 +83,7 @@ const properties: {
     isAvailable: false,
   },
   {
-    image: 'images/london-property.jpg',
+    image: '/images/london-property.jpg',
     title: 'London Flat',
     price: 23,
     location: {
@@ -102,6 +102,7 @@ showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 populateUser(you.isReturning, you.firstName);
 
 //Adding the properties
+const propertyContainer = document.querySelector('.properties') as HTMLElement;
 
 for (let i = 0; i < properties.length; i++) {
   const card = document.createElement('div');
