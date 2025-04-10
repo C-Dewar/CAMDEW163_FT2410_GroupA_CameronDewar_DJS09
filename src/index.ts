@@ -4,31 +4,39 @@
 // : number
 
 import { showReviewTotal, populateUser } from './utils';
+import { Permissions, LoyaltyUser } from './enums';
+const propertyContainer = document.querySelector('.properties') as HTMLElement;
+const footer = document.querySelector('.footer');
+
 let isOpen: boolean;
 
 const reviewTotalDisplay = document.querySelector('#reviews');
 
-const reviews = [
+const reviews: {
+  name: string;
+  stars: number;
+  loyaltyUser: LoyaltyUser;
+  date: string;
+}[] = [
   {
     name: 'Sheia',
     stars: 5,
-    loyaltyUser: true,
+    loyaltyUser: LoyaltyUser.GOLD_USER,
     date: '01-04-2021',
   },
   {
     name: 'Andrzej',
     stars: 3,
-    loyaltyUser: false,
+    loyaltyUser: LoyaltyUser.BRONZE_USER,
     date: '28-03-2021',
   },
   {
     name: 'Omar',
     stars: 4,
-    loyaltyUser: true,
+    loyaltyUser: LoyaltyUser.SILVER_USER,
     date: '27-03-2021',
   },
 ];
-
 const you: {
   firstName: string;
   lastName: string;
@@ -97,12 +105,13 @@ const properties: {
   },
 ];
 
+//Functions
+
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 
 populateUser(you.isReturning, you.firstName);
 
 //Adding the properties
-const propertyContainer = document.querySelector('.properties') as HTMLElement;
 
 for (let i = 0; i < properties.length; i++) {
   const card = document.createElement('div');
@@ -113,3 +122,12 @@ for (let i = 0; i < properties.length; i++) {
   card.appendChild(image);
   propertyContainer.appendChild(card);
 }
+
+let currentLocation: [string, string, number] = ['London', '11.03', 17];
+footer.innerHTML =
+  currentLocation[0] +
+  ' ' +
+  currentLocation[1] +
+  ' ' +
+  currentLocation[2] +
+  '°';
