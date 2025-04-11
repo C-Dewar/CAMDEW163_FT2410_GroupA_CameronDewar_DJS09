@@ -6,10 +6,18 @@ body {
     'Lucida Sans', Arial;
   color: darkgrey;
   flex-direction: column;
+  padding-bottom: 80px;
 }
 
 .container {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container img {
+  width: 100%;
 }
 
 .nav-bar {
@@ -36,6 +44,7 @@ body {
 .properties {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
@@ -46,6 +55,10 @@ body {
   box-shadow: rgb(0 0 0 / 12%) 0 1px 8px;
 }
 
+.card img {
+  width: 100%;
+}
+
 .footer {
   width: 100%;
   background-color: lightcoral;
@@ -54,4 +67,23 @@ body {
   text-align: center;
   padding: 30px;
   color: white;
+}
+
+.review-card {
+  padding: 10px;
+}
+
+.reviews {
+  display: flex;
+  padding: 10px;
+}
+
+button {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: goldenrod;
 }

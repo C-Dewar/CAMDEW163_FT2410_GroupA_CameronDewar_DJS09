@@ -3,21 +3,26 @@
 // all TypeScript weakness flags.
 // : number
 
-import { showReviewTotal, populateUser } from './utils';
+import {
+  showReviewTotal,
+  populateUser,
+  showDetails,
+  getTopTwoReviews,
+} from './utils';
 import { Permissions, LoyaltyUser } from './enums';
-const propertyContainer = document.querySelector('.properties') as HTMLElement;
+import { Review, Property } from './interfaces';
+import MainProperty from './classes';
+const propertyContainer = document.querySelector('.properties');
+const reviewContainer = document.querySelector('.reviews');
+const container = document.querySelector('.container');
+const button = document.querySelector('button');
 const footer = document.querySelector('.footer');
 
 let isOpen: boolean;
 
 const reviewTotalDisplay = document.querySelector('#reviews');
 
-const reviews: {
-  name: string;
-  stars: number;
-  loyaltyUser: LoyaltyUser;
-  date: string;
-}[] = [
+const reviews: Review[] = [
   {
     name: 'Sheia',
     stars: 5,
@@ -37,6 +42,7 @@ const reviews: {
     date: '27-03-2021',
   },
 ];
+
 const you = {
   firstName: 'Cam',
   lastName: 'Dewar',
@@ -46,19 +52,9 @@ const you = {
   stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow'],
 };
 
-const properties: {
-  image: string;
-  title: string;
-  price: number;
-  location: {
-    firstLine: string;
-    city: string;
-    code: number;
-    country: string;
-  };
-  contact: string;
-  isAvailable: boolean;
-}[] = [
+//Array of Properties
+
+const properties: Property[] = [
   {
     image: '/images/colombia-property.jpg',
     title: 'Colombian Shack',
@@ -75,7 +71,7 @@ const properties: {
   {
     image: '/images/poland-property.jpg',
     title: 'Polish Cottage',
-    price: 34,
+    price: 35,
     location: {
       firstLine: 'no 23',
       city: 'Gdansk',
@@ -88,7 +84,7 @@ const properties: {
   {
     image: '/images/london-property.jpg',
     title: 'London Flat',
-    price: 23,
+    price: 25,
     location: {
       firstLine: 'flat 15',
       city: 'London',
@@ -97,6 +93,19 @@ const properties: {
     },
     contact: 'andyluger@aol.com',
     isAvailable: true,
+  },
+  {
+    image: '/images/malaysian-hotel.jpg',
+    title: 'Malia Hotel',
+    price: 35,
+    location: {
+      firstLine: 'Room 4',
+      city: 'Malia',
+      code: 45334,
+      country: 'Malaysia',
+    },
+    contact: [+60349822083, 'lee34@gmail.com'],
+    isAvailable: false,
   },
 ];
 
@@ -130,11 +139,29 @@ for (let i = 0; i < properties.length; i++) {
   const image = document.createElement('img');
   image.setAttribute('src', properties[i].image);
   card.appendChild(image);
-  propertyContainer.appendChild(card);
   showDetails(you.permissions, card, properties[i].price);
+  propertyContainer.appendChild(card);
+}
+//Show reviews:
+
+let count = 0;
+function addReviews(array: Review[]): void {
+  if (!count) {
+    count++;
+    const topTwo = getTopTwoReviews(array);
+    for (let i = 0; i < topTwo.length; i++) {
+      const card = document.createElement('div');
+      card.classList.add('review-card');
+      card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name;
+      reviewContainer.appendChild(card);
+    }
+    container.removeChild(button);
+  }
 }
 
-let currentLocation: [string, string, number] = ['London', '11.03', 17];
+button.addEventListener('click', () => addReviews(reviews));
+
+let currentLocation: [string, string, number] = ['Cape Town', '11.03', 19];
 footer.innerHTML =
   currentLocation[0] +
   ' ' +
@@ -142,3 +169,21 @@ footer.innerHTML =
   ' ' +
   currentLocation[2] +
   '°';
+
+let yourMainProperty = new MainProperty(
+  '/images/italian-property.jpg',
+  'Italian House',
+  [
+    {
+      name: 'Dave',
+      stars: 5,
+      loyaltyUser: LoyaltyUser.GOLD_USER,
+      date: '12-04-2021',
+    },
+  ]
+);
+
+const mainImageContainer = document.querySelector('.main-image');
+const image = document.createElement('img');
+image.setAttribute('src', yourMainProperty.src);
+mainImageContainer.appendChild(image);
